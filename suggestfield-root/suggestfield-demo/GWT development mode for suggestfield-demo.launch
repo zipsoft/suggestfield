@@ -17,6 +17,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-noserver -war src/main/webapp/VAADIN/widgetsets com.zipsoft.suggestfield.demo.DemoWidgetSet -startupUrl http://localhost:8080/suggestfield-demo -bindAddress 127.0.0.1"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="suggestfield-demo"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1024M -XX:MaxPermSize=1024M -Xss10M"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/home/marko/Projects/prototype/suggestfield-root/suggestfield-demo"/>
 </launchConfiguration>
