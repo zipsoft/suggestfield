@@ -1,0 +1,43 @@
+.z-suggestfield {
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.z-suggestfield-input {
+	padding: 0;
+	margin: 0;
+}
+.z-suggestfield-icon {
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	width: 15px;
+	background: red;
+}
+.z-suggestion-items {
+	cursor: default;
+	margin-top: 0px;
+  	margin-left: 0px;
+  	background: white;		
+}
+.z-suggestion-items table {
+	border-collapse: collapse;
+}
+.z-suggestion-items .z-suggestion-item {
+	cursor: default;
+  	font-family: Arial Unicode MS, Arial, sans-serif;
+  	padding: 2px 40px 2px 1px;
+}
+.z-suggestion-items .z-suggestion-item-selected {
+  background: #E3E8F3;
+}
+.z-suggestfield-popup {
+	border: 1px solid #C3D9FF;
+	padding: 3px;
+	background: white;
+}
