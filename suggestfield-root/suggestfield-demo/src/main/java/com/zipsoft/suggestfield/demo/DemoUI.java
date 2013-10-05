@@ -27,6 +27,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -48,6 +49,9 @@ public class DemoUI extends UI
     @Override
     protected void init(VaadinRequest request) {
 
+    	final TabSheet tabSheet = new TabSheet();
+    	tabSheet.setSizeFull();    	
+    	
         // Initialize our new UI component
         final SuggestField component = new SuggestField();
         component.setImmediate(true);
@@ -73,17 +77,17 @@ public class DemoUI extends UI
 			}
 
 			@Override
-			public SuggestFieldSuggestion convertToModel(
+			public SuggestFieldSuggestion convertToServerSideValue(
 					SuggestFieldSuggestionImpl suggestion) {
 				// TODO Auto-generated method stub
-				return null;
+				return suggestion;
 			}
 
 			@Override
-			public SuggestFieldSuggestionImpl convertToSuggestion(
+			public SuggestFieldSuggestionImpl convertToClientSideValue(
 					SuggestFieldSuggestion model) {
 				// TODO Auto-generated method stub
-				return null;
+				return (SuggestFieldSuggestionImpl) model;
 			}
 		});
         
@@ -98,8 +102,9 @@ public class DemoUI extends UI
 			}
 		});
                               
+        tabSheet.addTab(component);
         
-        ComboBox cb = new ComboBox();
+//        ComboBox cb = new ComboBox();
 //        cb.setContainerDataSource(newDataSource);
 //        cb.setConverter(converter);
         
@@ -108,14 +113,16 @@ public class DemoUI extends UI
         final VerticalLayout layout = new VerticalLayout();
         layout.setStyleName("demoContentLayout");
         layout.setSizeFull();
-        layout.addComponent(component);
-        layout.setComponentAlignment(component, Alignment.MIDDLE_CENTER);
-        setContent(layout);
+        layout.addComponent(tabSheet);
+        layout.setExpandRatio(tabSheet, 1f);
+        layout.setComponentAlignment(tabSheet, Alignment.MIDDLE_CENTER);
+        
+        
         
         final Label lbl = new Label();
         lbl.setSizeFull();
-        layout.addComponent(lbl);
-        
+//        layout.addComponent(lbl);
+        tabSheet.addTab(lbl);
         
         Button btn = new Button("test value");
         btn.addClickListener(new ClickListener() {
@@ -123,11 +130,17 @@ public class DemoUI extends UI
 			@Override
 			public void buttonClick(ClickEvent event) {
 				lbl.setValue(component.getValue().toString());
-				System.out.println(component.getValue());
+				if (component.getState() != null && component.getState().suggestion != null) {
+					lbl.setValue(component.getState().suggestion.getDisplayString());
+				} else {
+					lbl.setValue("State je NULL");
+				}								
 			}
 		});
         layout.addComponent(btn);
 
+        
+        setContent(layout);
     }
 
 }

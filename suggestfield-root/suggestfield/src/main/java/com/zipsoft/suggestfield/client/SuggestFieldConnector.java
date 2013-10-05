@@ -22,7 +22,8 @@ import com.vaadin.shared.communication.FieldRpc.FocusAndBlurServerRpc;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(SuggestField.class)
-public class SuggestFieldConnector extends AbstractComponentConnector implements FocusHandler, BlurHandler {
+public class SuggestFieldConnector extends AbstractComponentConnector implements FocusHandler, BlurHandler,
+	ValueChangeHandler<SuggestFieldSuggestionImpl> {
 
 	private static final long serialVersionUID = 322786496901560008L;
 	
@@ -58,19 +59,12 @@ public class SuggestFieldConnector extends AbstractComponentConnector implements
 			}
 		});		
 		
-		getWidget().addValueChangeHandler(new ValueChangeHandler<SuggestFieldSuggestionImpl>() {
-			
-			@Override
-			public void onValueChange(ValueChangeEvent<SuggestFieldSuggestionImpl> event) {
-				rpc.valueChanged(event.getValue());				
-			}
-		});
-
 	}
 	
 	@Override
 	protected void init() {
-		super.init();		
+		super.init();	
+		getWidget().addValueChangeHandler(this);
 	}
 
 	// We must implement createWidget() to create correct type of widget
@@ -110,7 +104,7 @@ public class SuggestFieldConnector extends AbstractComponentConnector implements
         focusHandlerRegistration = EventHelper.updateFocusHandler(this, focusHandlerRegistration);
         blurHandlerRegistration = EventHelper.updateBlurHandler(this, blurHandlerRegistration);
 	}
-	
+		
 
 	@Override
 	public void onBlur(BlurEvent event) {
@@ -123,5 +117,23 @@ public class SuggestFieldConnector extends AbstractComponentConnector implements
 		getRpcProxy(FocusAndBlurServerRpc.class).focus();
 		
 	}
+	
+	@Override
+	public void flush() {
+		// TODO Auto-generated method stub		
+//		super.flush();
+		getState().suggestion = getWidget().getValue();
+	}
+
+	@Override
+	public void onValueChange(ValueChangeEvent<SuggestFieldSuggestionImpl> event) {
+//		getState().suggestion = getWidget().getValue();
+//		rpc.valueChanged(getWidget().getValue());
+		rpc.valueChanged(event.getValue());
+		
+	}
+	
+	
+
 
 }

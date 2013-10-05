@@ -32,10 +32,10 @@ public class SuggestField extends AbstractComponent implements Focusable,
 
 	private static final long serialVersionUID = -7457475157965163036L;
 
-	public interface SuggestionLoader {
+	public interface SuggestionLoader extends Serializable {
 		public List<SuggestFieldSuggestionImpl> loadSuggestions(String query, int limit);
-		public SuggestFieldSuggestion convertToModel(SuggestFieldSuggestionImpl suggestion);
-		public SuggestFieldSuggestionImpl convertToSuggestion(SuggestFieldSuggestion model);
+		public SuggestFieldSuggestion convertToServerSideValue(SuggestFieldSuggestionImpl suggestion);
+		public SuggestFieldSuggestionImpl convertToClientSideValue(SuggestFieldSuggestion model);
 	}
 
 	private SuggestionLoader suggestionLoader;
@@ -65,8 +65,12 @@ public class SuggestField extends AbstractComponent implements Focusable,
 
 		@Override
 		public void valueChanged(SuggestFieldSuggestionImpl value) {
-			setValueInternal(suggestionLoader.convertToModel(value));
-			fireSuggestionSelected();
+//			setValueInternal(suggestionLoader.convertToModel(value));
+//			fireSuggestionSelected();
+//			markAsDirty();
+			if (suggestionLoader != null) {
+				setValue(suggestionLoader.convertToServerSideValue(value), true);
+			}
 		}
 	};
 
@@ -124,7 +128,7 @@ public class SuggestField extends AbstractComponent implements Focusable,
 	public void setValue(SuggestFieldSuggestion newValue, boolean fireEvent) {
 		setValueInternal(newValue);
 		if (suggestionLoader != null) {
-			getState().suggestion = suggestionLoader.convertToSuggestion(this.value);
+			getState().suggestion = suggestionLoader.convertToClientSideValue(this.value);
 		} else {
 			getState().suggestion = null;
 		}

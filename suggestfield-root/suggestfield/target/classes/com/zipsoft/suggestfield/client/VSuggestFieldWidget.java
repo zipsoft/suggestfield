@@ -461,7 +461,7 @@ public class VSuggestFieldWidget extends Composite implements Field,
 		hideSuggestions();
 		searchSuggestionTrigger.cancel();
 		scheduledSearch = false;		
-		setValue(curSuggestion, true);
+//		setValue(curSuggestion, true);
 		fireSuggestionEvent(curSuggestion);
 //		this.currentSuggestion = curSuggestion;
 
@@ -555,6 +555,10 @@ public class VSuggestFieldWidget extends Composite implements Field,
 		textBox.addKeyPressHandler(this);		
 	}
 
+	/**
+	 * Ovo je isto kao i da je okinuo ValueChange 
+	 * @param selectedSuggestion
+	 */
 	private void fireSuggestionEvent(SuggestFieldSuggestionImpl selectedSuggestion) {
 		SelectionEvent.fire(this, selectedSuggestion);
 	}
@@ -583,8 +587,10 @@ public class VSuggestFieldWidget extends Composite implements Field,
 		this.currentSuggestion = value;
 		if (value == null) {
 			this.textBox.setText("");
+			Logger.getLogger(VSuggestFieldWidget.class.getName()).info("NewText: []");
 		} else {
 			this.textBox.setText(value.getReplacementString());
+			Logger.getLogger(VSuggestFieldWidget.class.getName()).info("NewText: [" + value.getReplacementString() + "]");
 		}
 		if (fireEvents) {
 			ValueChangeEvent.fireIfNotEqual(this, oldValue, value);
@@ -662,13 +668,29 @@ public class VSuggestFieldWidget extends Composite implements Field,
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<SuggestFieldSuggestionImpl> handler) {
 
+//		if (!valueChangeHandlerInitialized) {
+//			valueChangeHandlerInitialized = true;
+//			addChangeHandler(new ChangeHandler() {
+//				public void onChange(ChangeEvent event) {
+//					ValueChangeEvent.fire(VSuggestFieldWidget.this, event.get);
+//				}
+//			});
+//		}
 		if (!valueChangeHandlerInitialized) {
 			valueChangeHandlerInitialized = true;
-			addChangeHandler(new ChangeHandler() {
-				public void onChange(ChangeEvent event) {
-					ValueChangeEvent.fire(VSuggestFieldWidget.this, getValue());
+			addSelectionHandler(new SelectionHandler<SuggestFieldSuggestionImpl>() {
+				
+				@Override
+				public void onSelection(SelectionEvent<SuggestFieldSuggestionImpl> event) {
+					ValueChangeEvent.fire(VSuggestFieldWidget.this, event.getSelectedItem());
+					
 				}
 			});
+//			addChangeHandler(new ChangeHandler() {
+//				public void onChange(ChangeEvent event) {
+//					ValueChangeEvent.fire(VSuggestFieldWidget.this, event.get);
+//				}
+//			});
 		}
 		return addHandler(handler, ValueChangeEvent.getType());
 	}
