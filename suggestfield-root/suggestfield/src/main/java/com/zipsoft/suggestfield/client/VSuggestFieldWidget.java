@@ -478,7 +478,7 @@ public class VSuggestFieldWidget extends Composite implements Field,
 		case KeyCodes.KEY_DOWN:
 		case KeyCodes.KEY_UP:
 		case KeyCodes.KEY_ENTER:
-		case KeyCodes.KEY_TAB:
+//		case KeyCodes.KEY_TAB:
 		case KeyCodes.KEY_ESCAPE:
 		case KeyCodes.KEY_PAGEUP:
 		case KeyCodes.KEY_PAGEDOWN:
@@ -515,7 +515,7 @@ public class VSuggestFieldWidget extends Composite implements Field,
 			event.stopPropagation();
 			break;
 		case KeyCodes.KEY_ENTER:
-		case KeyCodes.KEY_TAB:
+//		case KeyCodes.KEY_TAB:
 			SuggestFieldSuggestionImpl suggestion = getCurrentSelection();
 			if (suggestion == null) {
 				hideSuggestions();
