@@ -7,11 +7,11 @@ import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -62,10 +62,12 @@ public class VSuggestionMenu extends Widget {
 		setStyleName(STYLENAME_DEFAULT);
 
 		// Hide focus outline in Mozilla/Webkit/Opera
-		DOM.setStyleAttribute(getElement(), "outline", "0px");
+		getElement().getStyle().setProperty("outline", "0px");
+//		DOM.setStyleAttribute(getElement(), "outline", "0px");
 
 		// Hide focus outline in IE 6/7
-		DOM.setElementAttribute(getElement(), "hideFocus", "true");
+//		DOM.setElementAttribute(getElement(), "hideFocus", "true");
+		getElement().getStyle().setProperty("hideFocus", "true");
 
 		// Deselect items when blurring without a child menu.
 		addDomHandler(new BlurHandler() {
@@ -164,7 +166,8 @@ public class VSuggestionMenu extends Widget {
 		}
 
 		Element container = getItemContainerElement();
-		DOM.removeChild(container, DOM.getChild(container, idx));
+		container.removeChild(container.getChild(idx));
+//		DOM.removeChild(container, DOM.getChild(container, idx));
 		items.remove(idx);
 		return true;
 	}
@@ -197,7 +200,8 @@ public class VSuggestionMenu extends Widget {
 
 		Element container = getItemContainerElement();
 		while (DOM.getChildCount(container) > 0) {
-			DOM.removeChild(container, DOM.getChild(container, 0));
+			container.removeChild(container.getChild(0));
+//			DOM.removeChild(container, DOM.getChild(container, 0));
 		}
 
 		for (VSuggestionMenuItem item : items) {
@@ -210,9 +214,12 @@ public class VSuggestionMenu extends Widget {
 
 	private VSuggestionMenuItem findItem(Element hItem) {
 		for (VSuggestionMenuItem item : items) {
-			if (DOM.isOrHasChild(item.getElement(), hItem)) {
+			if (item.getElement().isOrHasChild(hItem)) {
 				return item;
 			}
+//			if (DOM.isOrHasChild(item.getElement(), hItem)) {
+//				return item;
+//			}
 		}
 		return null;
 	}
@@ -440,7 +447,8 @@ public class VSuggestionMenu extends Widget {
 		}
 
 		case Event.ONKEYDOWN: {
-			int keyCode = DOM.eventGetKeyCode(event);
+//			int keyCode = DOM.eventGetKeyCode(event);
+			int keyCode = event.getKeyCode();
 			switch (keyCode) {
 			case KeyCodes.KEY_UP:
 				moveSelectionUp();
@@ -470,8 +478,10 @@ public class VSuggestionMenu extends Widget {
 	}
 
 	private void eatEvent(Event event) {
-		DOM.eventCancelBubble(event, true);
-		DOM.eventPreventDefault(event);
+//		DOM.eventCancelBubble(event, true);
+		event.stopPropagation();
+		event.preventDefault();
+//		DOM.eventPreventDefault(event);
 	}
 
 	/**
@@ -528,7 +538,8 @@ public class VSuggestionMenu extends Widget {
 	 *            the colspan
 	 */
 	private void setItemColSpan(UIObject item, int colspan) {
-		DOM.setElementPropertyInt(item.getElement(), "colSpan", colspan);
+//		DOM.setElementPropertyInt(item.getElement(), "colSpan", colspan);
+		item.getElement().getStyle().setPropertyPx("colSpan", colspan);
 	}
 
 	/**
