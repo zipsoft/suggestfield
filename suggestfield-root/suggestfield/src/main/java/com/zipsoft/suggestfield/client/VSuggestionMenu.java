@@ -487,8 +487,10 @@ public class VSuggestionMenu extends Widget {
 	/**
 	 * Get the index of a {@link MenuItem}.
 	 * 
+	 * @param item
 	 * @return the index of the item, or -1 if it is not contained by this
 	 *         MenuBar
+	 *       
 	 */
 	public int getItemIndex(VSuggestionMenuItem item) {
 		return items.indexOf(item);

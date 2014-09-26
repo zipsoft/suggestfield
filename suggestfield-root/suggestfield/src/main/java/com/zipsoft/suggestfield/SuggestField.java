@@ -110,7 +110,7 @@ public class SuggestField extends AbstractComponent implements Focusable,
 	 * Sets the input prompt - a textual prompt that is displayed when the field
 	 * would otherwise be empty, to prompt the user for input.
 	 * 
-	 * @param inputPrompt
+	 * @param inputPrompt inpitprompth
 	 */
 	public void setInputPrompt(String inputPrompt) {
 		getState().inputPrompt = inputPrompt;

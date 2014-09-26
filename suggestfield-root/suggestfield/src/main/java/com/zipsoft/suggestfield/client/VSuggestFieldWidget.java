@@ -143,7 +143,6 @@ public class VSuggestFieldWidget extends Composite implements Field,
 	/**
 	 * Ovaj metod prikazuje sugestije koje su ucitane sa servera
 	 * 
-	 * @param query
 	 */
 	public void showSuggestionsFromServer() {
 		suggestionReadyCallback.onSuggestionsReady();
