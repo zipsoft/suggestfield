@@ -1,2 +1,0 @@
-# Module com.zipsoft.suggestfield.demo.DemoWidgetSet
-# RPC service class, partial path of RPC policy file
