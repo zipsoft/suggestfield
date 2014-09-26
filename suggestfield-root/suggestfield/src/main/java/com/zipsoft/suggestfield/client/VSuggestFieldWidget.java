@@ -67,7 +67,7 @@ public class VSuggestFieldWidget extends Composite implements Field,
 		HandlesAriaCaption, HandlesAriaInvalid, HasChangeHandlers,
 		FocusHandler, BlurHandler, Focusable, KeyDownHandler, KeyUpHandler,
 		KeyPressHandler {
-
+		
 	private static final String CLASSNAME = "z-suggestfield";
 	private static final String CLASSNAME_INPUT = "-input";
 	private static final String CLASSNAME_ICON = "-icon";
